@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Survey Program</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.14.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.14.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function SurveyProgram() {
+            const [scores, setScores] = React.useState([]);
+            const [showModal, setShowModal] = React.useState(false);
+            const [selectedScore, setSelectedScore] = React.useState(null);
+
+            const handleScoreClick = (score) => {
+                if (score === 5) {
+                    setShowModal(true);
+                }
+                setSelectedScore(score);
+                setScores((prevScores) => [...prevScores, score]);
+            };
+
+            const handleCloseModal = () => {
+                setShowModal(false);
+            };
+
+            return (
+                <div className="container">
+                    <div className="survey-card">
+                        <h1>How was your experience?</h1>
+                        <p className="subtitle">Rate your satisfaction with our telephone service</p>
+                        
+                        <div className="score-buttons">
+                            {[1, 2, 3, 4, 5].map((score) => (
+                                <button 
+                                    key={score}
+                                    className={`score-btn ${selectedScore === score ? 'selected' : ''}`}
+                                    onClick={() => handleScoreClick(score)}
+                                >
+                                    <span className="score-number">{score}</span>
+                                    <span className="score-label">
+                                        {score === 1 ? 'Poor' : 
+                                         score === 2 ? 'Fair' : 
+                                         score === 3 ? 'Good' : 
+                                         score === 4 ? 'Great' : 
+                                         'Excellent'}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="results-section">
+                            <h2>Previous Ratings</h2>
+                            {scores.length === 0 ? (
+                                <p className="no-scores">No ratings yet.</p>
+                            ) : (
+                                <div className="scores-list">
+                                    {scores.map((score, index) => (
+                                        <span key={index} className="score-pill">
+                                            {score}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {scores.includes(5) && (
+    <div className="emoji-container">
+        <img src="https://cdn3.emoji.gg/emojis/5254-march7th-cheer.png" alt="Cheer Emoji" />
+    </div>
+)}
+                    </div>
+
+                    {showModal && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhnAhwBy2qiS8jA7LJhzPm_tUQs18Xbme-g&s" alt="Thank You Emoji" className="modal-emoji" />
+                                <h3>Thank You!</h3>
+                                <p>We're thrilled that you had an excellent experience.</p>
+                                <button className="close-btn" onClick={handleCloseModal}>Close</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(
+            <React.StrictMode>
+                <SurveyProgram />
+            </React.StrictMode>,
+            document.getElementById('root')
+        );
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .survey-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #718096;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .score-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .score-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 25px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .score-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-btn.selected {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+
+        .score-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .results-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .results-section h2 {
+            color: #2d3748;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .no-scores {
+            color: #718096;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .scores-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .score-pill {
+            background: #4299e1;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .emoji-container {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 48px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-emoji {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            color: #2d3748;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #2b6cb0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .survey-card {
+                padding: 20px;
+            }
+
+            .score-buttons {
+                flex-direction: column;
+            }
+
+            .score-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+</html>

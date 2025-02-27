@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --primary-color: #b5c6e0;
+    --primary-dark: #99afd4;
+    --background-color: #f8f6f8;
+    --form-background: #ffffff;
+    --text-color: #6b7280;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(181, 198, 224, 0.2);
+    --success-color: #9ed4ae;
+    --error-color: #f1a5a5;
+    --accent-pink: #f0d0e6;
+    --accent-mint: #b8e0d2;
+    --accent-lavender: #d4c6e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: var(--background-color);
+    background-image: 
+        linear-gradient(45deg, var(--accent-pink) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--accent-lavender) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--accent-mint) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--accent-pink) 75%);
+    background-size: 30px 30px;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    background-color: var(--form-background);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 
+        0 10px 30px var(--shadow-color),
+        0 6px 12px rgba(181, 198, 224, 0.1);
+    width: 100%;
+    max-width: 450px;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.form-container:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 
+        0 20px 40px var(--shadow-color),
+        0 12px 16px rgba(181, 198, 224, 0.15);
+}
+
+.form-title {
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--accent-lavender);
+    position: relative;
+}
+
+.form-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    transform: translateX(-50%);
+    animation: borderFlow 2s ease-in-out infinite;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.form-group:hover {
+    transform: translateY(-2px);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '▼';
+    font-size: 12px;
+    color: var(--primary-color);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.select-wrapper:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+select, input[type="date"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-color);
+    background-color: var(--form-background);
+    transition: all 0.3s ease;
+    appearance: none;
+}
+
+select:focus, input[type="date"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(181, 198, 224, 0.2);
+}
+
+button {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-lavender));
+    color: var(--text-color);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+/* Animations */
+@keyframes borderFlow {
+    0%, 100% {
+        width: 50px;
+    }
+    50% {
+        width: 100px;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.form-container {
+    animation: scaleIn 0.6s ease-out;
+}
+
+.form-group {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 25px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    select, input[type="date"] {
+        font-size: 14px;
+    }
+
+    button {
+        padding: 12px 25px;
+    }
+}
